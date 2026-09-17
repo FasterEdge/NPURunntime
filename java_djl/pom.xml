@@ -1,0 +1,20 @@
+<project>
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.example</groupId>
+  <artifactId>java_djl</artifactId>
+  <version>1.0.20260913</version>
+  <properties><maven.compiler.source>11</maven.compiler.source><maven.compiler.target>11</maven.compiler.target></properties>
+  <dependencies>
+    <dependency>
+      <groupId>ai.djl</groupId>
+      <artifactId>api</artifactId>
+      <version>0.31.1</version>
+    </dependency>
+    <dependency>
+      <groupId>ai.djl.onnxruntime</groupId>
+      <artifactId>onnxruntime-engine</artifactId>
+      <version>0.31.1</version>
+      <!-- TODO: 使用带 NPU 后端的 engine，或换成 ai.djl.pytorch / 平台 NPU engine -->
+    </dependency>
+  </dependencies>
+</project>

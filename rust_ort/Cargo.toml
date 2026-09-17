@@ -1,0 +1,8 @@
+[package]
+name = "rust_ort"
+version = "1.0.20260913"
+edition = "2021"
+
+[dependencies]
+ort = "2.0.0-rc.9"
+ndarray = "0.15"

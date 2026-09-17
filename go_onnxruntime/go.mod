@@ -1,0 +1,5 @@
+module github.com/FasterEdge/NPURunntime/go_onnxruntime
+
+go 1.21
+
+require github.com/yalue/onnxruntime_go v1.15.0

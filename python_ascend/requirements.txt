@@ -1,0 +1,2 @@
+# CANN（Ascend-cann-toolkit）需离线安装，无公共 pip 包
+numpy>=1.20

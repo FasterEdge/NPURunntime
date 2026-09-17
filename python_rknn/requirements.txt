@@ -1,0 +1,2 @@
+# rknn-toolkit2 需按目标平台从 Rockchip 官方源安装（无公共 PyPI 包）
+numpy>=1.20

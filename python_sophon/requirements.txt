@@ -1,0 +1,2 @@
+# sophon 随算能 libsophon SDK 提供（pip 安装参考官方文档）
+numpy>=1.20

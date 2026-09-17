@@ -1,0 +1,2 @@
+# PyMagicMind 随寒武纪 Neuware SDK 提供（无公共 PyPI 包）
+numpy>=1.20
