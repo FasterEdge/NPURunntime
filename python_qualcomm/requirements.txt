@@ -1,2 +1,2 @@
-qai-hub>=0.19
+qai-hub>=0.55.0
 numpy>=1.20
