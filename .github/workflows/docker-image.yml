@@ -21,7 +21,7 @@ jobs:
     - name: '导出并上传镜像工件'
       run: |
         docker save npu-runntime | gzip > npu-runntime-image.tar.gz
-    - uses: actions/upload-artifact@v4
+    - uses: actions/upload-artifact@v7
       with:
         name: 'npu-runntime-docker-image-${{ github.ref_name }}'
         path: 'npu-runntime-image.tar.gz'
