@@ -75,3 +75,5 @@
 1. 进入对应子目录，查看该语言/平台的 `main` 文件与依赖清单。
 2. 将 `TODO` 占位处替换为实际模型路径、输入输出名、输入尺寸、类别数、量化参数与 NPU 设备号等动态参数。
 3. 准备输入图片与模型文件（部分平台需先经官方工具链转换为 NPU 专用格式），按各目录的构建/运行说明执行（Python `requirements.txt`、C++ `CMakeLists.txt`、Go `go.mod`、Rust `Cargo.toml`、Java `pom.xml`、C# `.csproj`、Node `package.json`）。
+
+> Go 示例依赖本机 C 运行时：`go_onnxruntime` 需要 ONNX Runtime C 共享库（可用 `ort.SetSharedLibraryPath` 指定路径）；`go_tflite` 需要 TensorFlow Lite C API 头文件与 `libtensorflowlite_c.so`，并按上游 go-tflite 文档设置 `CGO_CFLAGS` / `CGO_LDFLAGS`。模型与这些原生依赖未包含在本仓库内。
