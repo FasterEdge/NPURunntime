@@ -1,2 +1,2 @@
 # NeuroPilot（Neuron SDK）需从联发科官方获取（无公共 PyPI 包）
-numpy>=1.20
+numpy>=2.5.4
