@@ -1,2 +1,2 @@
-executorch>=0.3
+executorch>=1.5.1
 numpy>=1.20
