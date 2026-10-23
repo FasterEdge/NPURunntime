@@ -13,7 +13,7 @@
     <dependency>
       <groupId>ai.djl.onnxruntime</groupId>
       <artifactId>onnxruntime-engine</artifactId>
-      <version>0.33.0</version>
+      <version>0.39.0</version>
       <!-- TODO: 使用带 NPU 后端的 engine，或换成 ai.djl.pytorch / 平台 NPU engine -->
     </dependency>
   </dependencies>
