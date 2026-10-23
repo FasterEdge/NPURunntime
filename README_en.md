@@ -79,3 +79,5 @@
 1. Enter the target subdirectory and inspect the language/platform `main` file and dependency manifest.
 2. Replace the `TODO` placeholders with the actual model path, input/output names, input dimensions, class counts, quantization parameters, and NPU device id.
 3. Prepare the input images and model files (some platforms require converting the model to an NPU-specific format with the official toolchain first), then build and run per the directory instructions (Python `requirements.txt`, C++ `CMakeLists.txt`, Go `go.mod`, Rust `Cargo.toml`, Java `pom.xml`, C# `.csproj`, Node `package.json`).
+
+> The Go examples depend on native C runtimes: `go_onnxruntime` requires the ONNX Runtime C shared library (use `ort.SetSharedLibraryPath` to point to it); `go_tflite` requires the TensorFlow Lite C API headers and `libtensorflowlite_c.so`, with `CGO_CFLAGS` / `CGO_LDFLAGS` set as documented upstream. These native libraries and model files are not bundled in this repository.
