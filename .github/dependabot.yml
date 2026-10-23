@@ -81,3 +81,138 @@ updates:
     labels:
       - dependencies
       - security
+  - package-ecosystem: cargo
+    directory: /rust_ort
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: maven
+    directory: /java_djl
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: maven
+    directory: /java_onnxruntime
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: npm
+    directory: /node_onnxruntime
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: npm
+    directory: /node_webnn
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_cambricon
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_executorch
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_horizon
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_mediatek
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_mnn
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_ncnn
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_ort_npu
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_paddlelite
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_sophon
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
+  - package-ecosystem: pip
+    directory: /python_tflite_npu
+    schedule:
+      interval: weekly
+      day: monday
+    open-pull-requests-limit: 5
+    labels:
+      - dependencies
+      - security
