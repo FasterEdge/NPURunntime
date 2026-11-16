@@ -1,2 +1,5 @@
-executorch>= 1.5.1
-numpy>= 2.5.4
+executorch>=1.6.0
+numpy>=2.5.5
+certifi>=2026.10.23
+idna>=3.20
+tqdm>=4.70.1
