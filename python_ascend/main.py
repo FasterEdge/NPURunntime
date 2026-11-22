@@ -26,7 +26,13 @@ def load_model(model_path, device_id):
 def run_inference(model_id, data):
     # TODO: 构造输入 dataset -> acl.mdl.execute -> 同步后读取输出
     # 完整流程参考 CANN 官方样例（ACLNN / GE 模式）
-    return []
+    # 未实现前必须抛错：返回 [] 会让 __main__ 打印 "done 0 outputs" 并 exit 0，
+    # 这是假的成功路径（本机没有昇腾 NPU，也没有 CANN SDK）。
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 acl.mdl.execute 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 if __name__ == "__main__":
     model_id, desc = load_model(MODEL_PATH, DEVICE_ID)

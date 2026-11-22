@@ -19,7 +19,12 @@ def load_model(path, device_id):
 
 def run_inference(context, data):
     # TODO: 构造输入/输出 tensor -> context.enqueue -> 同步后取输出
-    return []
+    # 未实现前必须抛错，避免"done 0 outputs"的假成功路径（本机无 MLU 与 Neuware SDK）。
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 context.enqueue 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 if __name__ == "__main__":
     context = load_model(MODEL_PATH, DEVICE_ID)

@@ -12,11 +12,20 @@ INPUT_SHAPE = (1, 3, 640, 640)     # TODO: 按模型输入 shape 修改
 def load_model(path):
     # TODO: 使用 NeuroPilot SDK（Neuron SDK）加载 DLA 模型
     # 参考官方样例：模型转换 + APU 运行时推理
-    return None
+    # 未实现前必须抛错，避免打印假的 'done 0 outputs'（本机无 APU 与 NeuroPilot SDK）。
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 NeuroPilot 加载 DLA 模型 / APU 推理接口 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 def run_inference(model, data):
     # TODO: 调用 APU 推理接口，返回输出
-    return []
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 NeuroPilot 加载 DLA 模型 / APU 推理接口 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 if __name__ == "__main__":
     model = load_model(MODEL_PATH)

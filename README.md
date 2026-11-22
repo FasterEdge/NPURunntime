@@ -70,6 +70,38 @@
 | [node_onnxruntime](node_onnxruntime/) | 通用（NPU EP） | onnxruntime-node | Node.js 版 ONNX Runtime（NPU 执行提供程序） |
 | [node_webnn](node_webnn/) | 通用（WebNN） | WebNN API | WebNN NPU 后端推理 |
 
+## 可验证性矩阵（machine-readable）
+
+仓库根的 `matrix.json` 记录每个示例的真实可验证性状态，由脚本从源码提取生成，**不是手写**：
+
+```
+python tools/gen_matrix.py          # 重新提取并覆盖 matrix.json
+python tools/gen_matrix.py --check  # 校验 matrix.json 与源码一致，不一致退出码 1
+```
+
+`--check` 只校验**与工具链无关的源码事实**（未消除的 TODO、推理调用是否存在、模型格式、
+入口文件、缺失依赖清单），因此可以在 CI 里稳定运行。它有意不校验 `status` / `compile_check` /
+`evidence` 字段——这三个字段依赖本机是否装了 g++ / node / gofmt / dotnet / cargo 与 ONNX Runtime
+共享库，跨机器比对会产生假失败。想确认状态字段是否最新，跑一次
+`python tools/gen_matrix.py && PYTHON_BIN=<你的 venv python> python tools/verify_matrix.py`。
+
+状态定义（三选一，判定规则见 `tools/gen_matrix.py` 顶部 docstring）：
+
+| 状态 | 含义 |
+|------|------|
+| `verified` | 由 `tools/verify_matrix.py` 真实构建并运行通过，命令与输出记录在 `matrix.json` 的 `evidence` 字段 |
+| `compilable` | 语法/编译检查通过（Python `py_compile` 等价语法检查、Go `gofmt -l`、JS `node --check`、C++ `g++ -fsyntax-only`），但推理调用尚未执行（缺模型或运行库） |
+| `placeholder` | 存在未消除 `TODO`，或推理调用缺失/被注释掉，或语法编译检查失败 |
+
+> **关于"不要假装能跑真实 NPU"**：本仓库所有 Python 示例都能通过语法检查，但**没有一条推理路径在本机真正执行过**，
+> 因为本机没有昇腾/瑞芯微/高通/地平线/寒武纪 NPU，也没有 CANN / RKNPU2 / SNPE / QNN / NeuroPilot / Core ML 等厂商 SDK。
+> 每个示例缺失的具体依赖见 `matrix.json` 的 `missing_deps` 字段。
+> 因此除 `go_onnxruntime`（ONNX Runtime CPU EP 实跑验证，模型借用 ModelRunntime 的 `yolov5n.onnx`）外，其余示例一律标为 `placeholder`——
+> 这不是"未完成"，而是对硬件边界的诚实标注：**没有硬件与 SDK，就不宣称跑通**。
+> 用户提供的 `run_inference` 里 `return []` / `return None` 的示例（python_ascend / python_cambricon /
+> python_executorch / python_horizon / python_mediatek）在 `matrix.json` 的
+> `signals.shell_functions` 字段里被逐一点名。
+
 ## 使用方式
 
 1. 进入对应子目录，查看该语言/平台的 `main` 文件与依赖清单。

@@ -12,7 +12,12 @@ INPUT_SIZE = (640, 640)            # TODO: 按模型输入尺寸修改
 def load_model(path):
     # TODO: 使用地平线 BPU SDK（hbdk / hb_mapper）加载量化模型
     # 参考官方样例：hb_mapper 转换 + 运行时推理
-    return None
+    # 未实现前必须抛错，避免打印假的 'done 0 outputs'（本机无地平线 BPU 与 SDK）。
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 hbdk / hb_mapper / BPU 推理接口 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 def preprocess(image_path):
     import cv2
@@ -23,7 +28,11 @@ def preprocess(image_path):
 
 def run_inference(model, data):
     # TODO: 调用 BPU 推理接口，返回输出
-    return []
+    raise NotImplementedError(
+        "本示例的推理主体尚未实现：本机没有对应 NPU 硬件与厂商 SDK。\n"
+        "  请按 TODO 注释补齐 hbdk / hb_mapper / BPU 推理接口 的真实调用后删除本行；\n"
+        "  在此之前直接运行会抛错而不是打印假的 'done 0 outputs'。"
+    )
 
 if __name__ == "__main__":
     model = load_model(MODEL_PATH)

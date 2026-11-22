@@ -1,0 +1,1299 @@
+{
+  "schema_version": 1,
+  "generated_by": "tools/gen_matrix.py",
+  "note": "本文件由脚本从源码机械提取生成，请勿手工编辑；状态字段不来自人工判断。",
+  "status_rules": {
+    "verified": "由 tools/verify_matrix.py 真实构建并运行通过，evidence 字段记录命令与输出",
+    "compilable": "语法/编译检查通过，但推理调用未执行（缺模型或运行库）",
+    "placeholder": "存在未消除 TODO，或推理调用缺失/被注释，或语法编译检查失败"
+  },
+  "environment": {
+    "python": "3.14.7",
+    "python_syntax_checker": "ast.parse（与 python -m py_compile 的语法层等价）"
+  },
+  "summary": {
+    "total": 29,
+    "verified": 0,
+    "compilable": 0,
+    "placeholder": 29
+  },
+  "samples": [
+    {
+      "id": "python_ascend",
+      "platform": "华为昇腾 Ascend",
+      "language": "python",
+      "runtime": "acl",
+      "format": [
+        "om"
+      ],
+      "entry": "python_ascend/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "CANN toolkit（pyACL）",
+        ".om 离线模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          12,
+          27,
+          33,
+          39,
+          46
+        ],
+        "live_inference_call_lines": [
+          26,
+          41,
+          43
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [
+        "Dockerfile"
+      ],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_rknn",
+      "platform": "瑞芯微 Rockchip",
+      "language": "python",
+      "runtime": "rknn-toolkit2",
+      "format": [
+        "rknn"
+      ],
+      "entry": "python_rknn/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "rknn-toolkit2",
+        ".rknn 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          11,
+          25,
+          29
+        ],
+        "live_inference_call_lines": [
+          25
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_cambricon",
+      "platform": "寒武纪 Cambricon",
+      "language": "python",
+      "runtime": "magicmind",
+      "format": [],
+      "entry": "python_cambricon/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "Neuware SDK（PyMagicMind）",
+        ".mm 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          15,
+          21,
+          25,
+          31
+        ],
+        "live_inference_call_lines": [
+          25
+        ],
+        "commented_out_inference_call_lines": [
+          21
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_sophon",
+      "platform": "算能 Sophon",
+      "language": "python",
+      "runtime": "sail",
+      "format": [
+        "bmodel"
+      ],
+      "entry": "python_sophon/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "SAIL（sophon-sail）",
+        ".bmodel 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          14,
+          18,
+          19,
+          20,
+          21,
+          27
+        ],
+        "live_inference_call_lines": [
+          22
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_horizon",
+      "platform": "地平线 Horizon",
+      "language": "python",
+      "runtime": "hbdk",
+      "format": [
+        "bin"
+      ],
+      "entry": "python_horizon/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "地平线 BPU SDK（hb_mapper/hbdk）",
+        ".bin 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          13,
+          18,
+          30,
+          33,
+          39
+        ],
+        "live_inference_call_lines": [
+          29,
+          41,
+          43,
+          44
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_qualcomm",
+      "platform": "高通 Qualcomm",
+      "language": "python",
+      "runtime": "qai_hub",
+      "format": [
+        "onnx"
+      ],
+      "entry": "python_qualcomm/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "qai-hub 账号与设备",
+        ".onnx/.tflite 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          11,
+          12,
+          33
+        ],
+        "live_inference_call_lines": [
+          17,
+          25
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_mediatek",
+      "platform": "联发科 MediaTek",
+      "language": "python",
+      "runtime": "neuropilot",
+      "format": [
+        "neuron"
+      ],
+      "entry": "python_mediatek/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "NeuroPilot SDK",
+        ".neuron 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          13,
+          18,
+          23,
+          26,
+          32
+        ],
+        "live_inference_call_lines": [
+          22,
+          34,
+          36,
+          37
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_coreml",
+      "platform": "Apple",
+      "language": "python",
+      "runtime": "coremltools",
+      "format": [
+        "mlpackage"
+      ],
+      "entry": "python_coreml/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "macOS + coremltools",
+        ".mlpackage 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          11,
+          19,
+          24
+        ],
+        "live_inference_call_lines": [
+          15,
+          19
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_openvino_npu",
+      "platform": "Intel",
+      "language": "python",
+      "runtime": "openvino",
+      "format": [
+        "xml"
+      ],
+      "entry": "python_openvino_npu/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "OpenVINO Runtime + NPU 驱动/插件",
+        "IR 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          12,
+          17,
+          23,
+          27
+        ],
+        "live_inference_call_lines": [
+          17,
+          22,
+          23
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_ort_npu",
+      "platform": "通用 NPU EP",
+      "language": "python",
+      "runtime": "onnxruntime",
+      "format": [
+        "onnx"
+      ],
+      "entry": "python_ort_npu/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "onnxruntime 的 NPU EP（QNN/OpenVINO/CoreML/VitisAI）",
+        ".onnx 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          12,
+          13,
+          25
+        ],
+        "live_inference_call_lines": [
+          18,
+          21
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_tflite_npu",
+      "platform": "通用 delegate",
+      "language": "python",
+      "runtime": "tflite",
+      "format": [
+        "tflite"
+      ],
+      "entry": "python_tflite_npu/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "libhexagon_delegate.so 或 NNAPI（Android）",
+        ".tflite 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          14,
+          15,
+          29
+        ],
+        "live_inference_call_lines": [
+          16,
+          17
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_executorch",
+      "platform": "移动端 NPU",
+      "language": "python",
+      "runtime": "executorch",
+      "format": [
+        "pte"
+      ],
+      "entry": "python_executorch/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ExecuTorch 运行时与厂商 backend",
+        ".pte 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          13,
+          18,
+          23,
+          26,
+          32
+        ],
+        "live_inference_call_lines": [],
+        "commented_out_inference_call_lines": [
+          23
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_ncnn",
+      "platform": "通用 Vulkan",
+      "language": "python",
+      "runtime": "ncnn",
+      "format": [
+        "bin",
+        "param"
+      ],
+      "entry": "python_ncnn/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ncnn Python 绑定",
+        "Vulkan 驱动",
+        "model.param/bin"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          12,
+          13,
+          14,
+          15,
+          19,
+          27,
+          34
+        ],
+        "live_inference_call_lines": [
+          27
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_mnn",
+      "platform": "通用 NPU",
+      "language": "python",
+      "runtime": "mnn",
+      "format": [
+        "mnn"
+      ],
+      "entry": "python_mnn/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "MNN Python 绑定（mnn>=3.6.1）",
+        ".mnn 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          10,
+          11,
+          16,
+          23,
+          27,
+          32
+        ],
+        "live_inference_call_lines": [
+          17,
+          26
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "python_paddlelite",
+      "platform": "通用国产 NPU",
+      "language": "python",
+      "runtime": "paddlelite",
+      "format": [
+        "nb"
+      ],
+      "entry": "python_paddlelite/main.py",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "paddlelite Python 包",
+        ".nb 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          7,
+          10,
+          11,
+          14,
+          17,
+          21,
+          24,
+          29
+        ],
+        "live_inference_call_lines": [
+          18,
+          23
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "ast.parse (equivalent to py_compile)",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_ascend",
+      "platform": "华为昇腾 Ascend",
+      "language": "cpp",
+      "runtime": "acl",
+      "format": [
+        "om"
+      ],
+      "entry": "cpp_ascend/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "CANN toolkit（acl/acl.h、libascendcl）",
+        ".om 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          7,
+          11,
+          12,
+          23,
+          24,
+          28,
+          32,
+          38
+        ],
+        "live_inference_call_lines": [],
+        "commented_out_inference_call_lines": [
+          28,
+          32
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": false,
+        "detail": "D:\\Projects\\FasterEdge\\NPURunntime\\cpp_ascend\\main.cc:7:10: fatal error: acl/acl.h: No such file or directory"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_rknn",
+      "platform": "瑞芯微 Rockchip",
+      "language": "cpp",
+      "runtime": "rknn",
+      "format": [
+        "rknn"
+      ],
+      "entry": "cpp_rknn/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "RKNPU2 SDK（rknn_api.h、librknnrt）",
+        ".rknn 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          7,
+          11,
+          17,
+          21,
+          25,
+          31
+        ],
+        "live_inference_call_lines": [],
+        "commented_out_inference_call_lines": [
+          21,
+          25
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": false,
+        "detail": "D:\\Projects\\FasterEdge\\NPURunntime\\cpp_rknn\\main.cc:7:10: fatal error: rknn_api.h: No such file or directory"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_qualcomm",
+      "platform": "高通 Qualcomm",
+      "language": "cpp",
+      "runtime": "snpe",
+      "format": [
+        "dlc"
+      ],
+      "entry": "cpp_qualcomm/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "SNPE/QNN SDK 头文件与库",
+        ".dlc/.bin 模型"
+      ],
+      "signals": {
+        "todo_lines": [
+          7,
+          8,
+          12,
+          14,
+          20,
+          24
+        ],
+        "live_inference_call_lines": [
+          26
+        ],
+        "commented_out_inference_call_lines": [
+          15
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_openvino_npu",
+      "platform": "Intel",
+      "language": "cpp",
+      "runtime": "openvino",
+      "format": [
+        "xml"
+      ],
+      "entry": "cpp_openvino_npu/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "OpenVINO Runtime C++ SDK + NPU 插件"
+      ],
+      "signals": {
+        "todo_lines": [
+          11,
+          12,
+          16,
+          19,
+          34
+        ],
+        "live_inference_call_lines": [
+          16,
+          24,
+          28
+        ],
+        "commented_out_inference_call_lines": [
+          34
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": false,
+        "detail": "D:\\Projects\\FasterEdge\\NPURunntime\\cpp_openvino_npu\\main.cc:7:10: fatal error: openvino/openvino.hpp: No such file or directory"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_ncnn",
+      "platform": "通用 Vulkan",
+      "language": "cpp",
+      "runtime": "ncnn",
+      "format": [
+        "bin",
+        "param"
+      ],
+      "entry": "cpp_ncnn/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ncnn C++ SDK（net.h）",
+        "Vulkan 驱动"
+      ],
+      "signals": {
+        "todo_lines": [
+          11,
+          12,
+          15,
+          22,
+          27,
+          31
+        ],
+        "live_inference_call_lines": [
+          21
+        ],
+        "commented_out_inference_call_lines": [
+          27,
+          31
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": false,
+        "detail": "D:\\Projects\\FasterEdge\\NPURunntime\\cpp_ncnn\\main.cc:7:10: fatal error: net.h: No such file or directory"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "cpp_mnn",
+      "platform": "通用 NPU",
+      "language": "cpp",
+      "runtime": "mnn",
+      "format": [
+        "mnn"
+      ],
+      "entry": "cpp_mnn/main.cc",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "MNN C++ SDK（MNN/Interpreter.hpp）"
+      ],
+      "signals": {
+        "todo_lines": [
+          12,
+          18,
+          21,
+          35
+        ],
+        "live_inference_call_lines": [
+          19,
+          25,
+          29
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "g++ -std=c++17 -fsyntax-only",
+        "ok": false,
+        "detail": "D:\\Projects\\FasterEdge\\NPURunntime\\cpp_mnn\\main.cc:7:10: fatal error: MNN/Interpreter.hpp: No such file or directory"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "go_onnxruntime",
+      "platform": "通用 NPU EP",
+      "language": "go",
+      "runtime": "onnxruntime",
+      "format": [
+        "onnx"
+      ],
+      "entry": "go_onnxruntime/main.go",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ONNX Runtime C 共享库",
+        "NPU EP 插件"
+      ],
+      "signals": {
+        "todo_lines": [
+          17,
+          21,
+          22,
+          29,
+          46,
+          74
+        ],
+        "live_inference_call_lines": [],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [
+        "go_onnxruntime"
+      ],
+      "compile_check": {
+        "tool": "gofmt -l",
+        "ok": false,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "go_tflite",
+      "platform": "通用 delegate",
+      "language": "go",
+      "runtime": "tflite",
+      "format": [
+        "tflite"
+      ],
+      "entry": "go_tflite/main.go",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "TFLite C API + libtensorflowlite_c"
+      ],
+      "signals": {
+        "todo_lines": [
+          17,
+          27,
+          28,
+          38,
+          51
+        ],
+        "live_inference_call_lines": [
+          30,
+          36
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "gofmt -l",
+        "ok": false,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "rust_ort",
+      "platform": "通用 NPU EP",
+      "language": "rust",
+      "runtime": "ort",
+      "format": [
+        "onnx"
+      ],
+      "entry": "rust_ort/src/main.rs",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ONNX Runtime 共享库 + NPU EP"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          13,
+          17,
+          33
+        ],
+        "live_inference_call_lines": [
+          31
+        ],
+        "commented_out_inference_call_lines": [
+          22,
+          28
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [
+        "target\\debug\\.cargo-build-lock",
+        "target\\debug\\.cargo-lock",
+        "target\\debug\\.fingerprint\\autocfg-1cd188ac8ac276ea\\dep-lib-autocfg",
+        "target\\debug\\.fingerprint\\autocfg-1cd188ac8ac276ea\\lib-autocfg",
+        "target\\debug\\.fingerprint\\autocfg-955d0f4e9b58a756\\dep-lib-autocfg",
+        "target\\debug\\.fingerprint\\autocfg-955d0f4e9b58a756\\lib-autocfg",
+        "target\\debug\\.fingerprint\\base64-220d84cd9ede7b71\\dep-lib-base64",
+        "target\\debug\\.fingerprint\\base64-220d84cd9ede7b71\\lib-base64",
+        "target\\debug\\.fingerprint\\base64-6117077ad283c634\\dep-lib-base64",
+        "target\\debug\\.fingerprint\\base64-6117077ad283c634\\lib-base64",
+        "target\\debug\\.fingerprint\\base64ct-5bc3a2d21277c95a\\dep-lib-base64ct",
+        "target\\debug\\.fingerprint\\base64ct-5bc3a2d21277c95a\\lib-base64ct",
+        "target\\debug\\.fingerprint\\base64ct-a8a112f06b46776d\\dep-lib-base64ct",
+        "target\\debug\\.fingerprint\\base64ct-a8a112f06b46776d\\lib-base64ct",
+        "target\\debug\\.fingerprint\\bytes-ca2ad673114dfc88\\dep-lib-bytes",
+        "target\\debug\\.fingerprint\\bytes-ca2ad673114dfc88\\lib-bytes",
+        "target\\debug\\.fingerprint\\bytes-d1baaa49b0b38f27\\dep-lib-bytes",
+        "target\\debug\\.fingerprint\\bytes-d1baaa49b0b38f27\\lib-bytes",
+        "target\\debug\\.fingerprint\\der-4bdbd22aa55282e2\\dep-lib-der",
+        "target\\debug\\.fingerprint\\der-4bdbd22aa55282e2\\lib-der",
+        "target\\debug\\.fingerprint\\hmac-sha256-9e907ed23f7e27e5\\dep-lib-hmac_sha256",
+        "target\\debug\\.fingerprint\\hmac-sha256-9e907ed23f7e27e5\\lib-hmac_sha256",
+        "target\\debug\\.fingerprint\\hmac-sha256-d1f0c88a2c4c3420\\dep-lib-hmac_sha256",
+        "target\\debug\\.fingerprint\\hmac-sha256-d1f0c88a2c4c3420\\lib-hmac_sha256",
+        "target\\debug\\.fingerprint\\http-562440dae8f10955\\dep-lib-http",
+        "target\\debug\\.fingerprint\\http-562440dae8f10955\\lib-http",
+        "target\\debug\\.fingerprint\\httparse-0ae247bab06d1159\\run-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\httparse-2af4de4a491e4526\\output-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\httparse-82fc6e044745ae67\\build-script-build-script-build",
+        "target\\debug\\.fingerprint\\httparse-82fc6e044745ae67\\dep-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\httparse-f186dfb73966eb4a\\dep-lib-httparse",
+        "target\\debug\\.fingerprint\\httparse-f186dfb73966eb4a\\lib-httparse",
+        "target\\debug\\.fingerprint\\itoa-00cfac511b27a68f\\dep-lib-itoa",
+        "target\\debug\\.fingerprint\\itoa-00cfac511b27a68f\\lib-itoa",
+        "target\\debug\\.fingerprint\\itoa-77fba506ae20624f\\dep-lib-itoa",
+        "target\\debug\\.fingerprint\\itoa-77fba506ae20624f\\lib-itoa",
+        "target\\debug\\.fingerprint\\log-3594ca096ffdc7cb\\dep-lib-log",
+        "target\\debug\\.fingerprint\\log-3594ca096ffdc7cb\\lib-log",
+        "target\\debug\\.fingerprint\\log-72cb4584eace6850\\dep-lib-log",
+        "target\\debug\\.fingerprint\\log-72cb4584eace6850\\lib-log",
+        "target\\debug\\.fingerprint\\lzma-rust2-52a2742fd8181237\\dep-lib-lzma_rust2",
+        "target\\debug\\.fingerprint\\lzma-rust2-52a2742fd8181237\\lib-lzma_rust2",
+        "target\\debug\\.fingerprint\\lzma-rust2-fda71c78ebb77671\\dep-lib-lzma_rust2",
+        "target\\debug\\.fingerprint\\lzma-rust2-fda71c78ebb77671\\lib-lzma_rust2",
+        "target\\debug\\.fingerprint\\matrixmultiply-4a47364e9073c8d4\\run-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\matrixmultiply-59338b989805cf72\\build-script-build-script-build",
+        "target\\debug\\.fingerprint\\matrixmultiply-59338b989805cf72\\dep-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\matrixmultiply-be462da889003fdc\\dep-lib-matrixmultiply",
+        "target\\debug\\.fingerprint\\matrixmultiply-be462da889003fdc\\lib-matrixmultiply",
+        "target\\debug\\.fingerprint\\native-tls-2e8409e71001a091\\output-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\native-tls-5111374c6ef441b7\\dep-lib-native_tls",
+        "target\\debug\\.fingerprint\\native-tls-5111374c6ef441b7\\lib-native_tls",
+        "target\\debug\\.fingerprint\\native-tls-d21bb5aec9835148\\build-script-build-script-build",
+        "target\\debug\\.fingerprint\\native-tls-d21bb5aec9835148\\dep-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\native-tls-deb746e5a4873545\\run-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\ndarray-0bc3adfe233ce746\\dep-lib-ndarray",
+        "target\\debug\\.fingerprint\\ndarray-0bc3adfe233ce746\\lib-ndarray",
+        "target\\debug\\.fingerprint\\num-complex-6b6a7f75a3f0b028\\dep-lib-num_complex",
+        "target\\debug\\.fingerprint\\num-complex-6b6a7f75a3f0b028\\lib-num_complex",
+        "target\\debug\\.fingerprint\\num-integer-9f81e0b04c7dd906\\dep-lib-num_integer",
+        "target\\debug\\.fingerprint\\num-integer-9f81e0b04c7dd906\\lib-num_integer",
+        "target\\debug\\.fingerprint\\num-traits-1c92cbb511db2e4a\\dep-lib-num_traits",
+        "target\\debug\\.fingerprint\\num-traits-1c92cbb511db2e4a\\lib-num_traits",
+        "target\\debug\\.fingerprint\\num-traits-76afb40a8e1cd51e\\build-script-build-script-build",
+        "target\\debug\\.fingerprint\\num-traits-76afb40a8e1cd51e\\dep-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\num-traits-9a1f284b321da57a\\run-build-script-build-script-build",
+        "target\\debug\\.fingerprint\\once_cell-9785afbc73ac60a6\\dep-lib-once_cell",
+        "target\\debug\\.fingerprint\\once_cell-9785afbc73ac60a6\\lib-once_cell",
+        "target\\debug\\.fingerprint\\once_cell-a9600bbb1b1336e3\\dep-lib-once_cell",
+        "target\\debug\\.fingerprint\\once_cell-a9600bbb1b1336e3\\lib-once_cell",
+        "target\\debug\\.fingerprint\\ort-sys-554093bbe661291a\\build-script-build-script-main",
+        "target\\debug\\.fingerprint\\ort-sys-554093bbe661291a\\dep-build-script-build-script-main",
+        "target\\debug\\.fingerprint\\pem-rfc7468-0ee6e4118ec62d10\\dep-lib-pem_rfc7468",
+        "target\\debug\\.fingerprint\\pem-rfc7468-0ee6e4118ec62d10\\lib-pem_rfc7468",
+        "target\\debug\\.fingerprint\\percent-encoding-38b49e4a5a7fd654\\dep-lib-percent_encoding",
+        "target\\debug\\.fingerprint\\percent-encoding-38b49e4a5a7fd654\\lib-percent_encoding",
+        "target\\debug\\.fingerprint\\percent-encoding-81646422ecb0c9ff\\dep-lib-percent_encoding",
+        "target\\debug\\.fingerprint\\percent-encoding-81646422ecb0c9ff\\lib-percent_encoding",
+        "target\\debug\\.fingerprint\\pin-project-lite-17599eb2df3f8712\\dep-lib-pin_project_lite",
+        "target\\debug\\.fingerprint\\pin-project-lite-17599eb2df3f8712\\lib-pin_project_lite",
+        "target\\debug\\.fingerprint\\pin-project-lite-990e22e56c967f9a\\dep-lib-pin_project_lite",
+        "target\\debug\\.fingerprint\\pin-project-lite-990e22e56c967f9a\\lib-pin_project_lite",
+        "target\\debug\\.fingerprint\\rawpointer-0b39449fb4885eb2\\dep-lib-rawpointer",
+        "target\\debug\\.fingerprint\\rawpointer-0b39449fb4885eb2\\lib-rawpointer",
+        "target\\debug\\.fingerprint\\rawpointer-cf33eda3b28912d0\\dep-lib-rawpointer",
+        "target\\debug\\.fingerprint\\rawpointer-cf33eda3b28912d0\\lib-rawpointer",
+        "target\\debug\\.fingerprint\\rustls-pki-types-5962780ee97305f0\\dep-lib-rustls_pki_types",
+        "target\\debug\\.fingerprint\\rustls-pki-types-5962780ee97305f0\\lib-rustls_pki_types",
+        "target\\debug\\.fingerprint\\rustls-pki-types-6b3af09a35ffc722\\dep-lib-rustls_pki_types",
+        "target\\debug\\.fingerprint\\rustls-pki-types-6b3af09a35ffc722\\lib-rustls_pki_types",
+        "target\\debug\\.fingerprint\\schannel-4252fc8056f7192a\\dep-lib-schannel",
+        "target\\debug\\.fingerprint\\schannel-4252fc8056f7192a\\lib-schannel",
+        "target\\debug\\.fingerprint\\smallvec-7e9b8fe0d1ed974f\\dep-lib-smallvec",
+        "target\\debug\\.fingerprint\\smallvec-7e9b8fe0d1ed974f\\lib-smallvec",
+        "target\\debug\\.fingerprint\\smallvec-ce498adc0893cf54\\dep-lib-smallvec",
+        "target\\debug\\.fingerprint\\smallvec-ce498adc0893cf54\\lib-smallvec",
+        "target\\debug\\.fingerprint\\tracing-ba3df607657810ac\\dep-lib-tracing",
+        "target\\debug\\.fingerprint\\tracing-ba3df607657810ac\\lib-tracing",
+        "target\\debug\\.fingerprint\\tracing-core-6727c913f3db8321\\dep-lib-tracing_core",
+        "target\\debug\\.fingerprint\\tracing-core-6727c913f3db8321\\lib-tracing_core",
+        "target\\debug\\.fingerprint\\tracing-core-f52d169884dcf6d0\\dep-lib-tracing_core",
+        "target\\debug\\.fingerprint\\tracing-core-f52d169884dcf6d0\\lib-tracing_core",
+        "target\\debug\\.fingerprint\\ureq-3150503a3a89dbcb\\dep-lib-ureq",
+        "target\\debug\\.fingerprint\\ureq-3150503a3a89dbcb\\lib-ureq",
+        "target\\debug\\.fingerprint\\ureq-proto-d6c8ee1b5d9fb4dd\\dep-lib-ureq_proto",
+        "target\\debug\\.fingerprint\\ureq-proto-d6c8ee1b5d9fb4dd\\lib-ureq_proto",
+        "target\\debug\\.fingerprint\\utf8-zero-41c83bf31b63c163\\dep-lib-utf8_zero",
+        "target\\debug\\.fingerprint\\utf8-zero-41c83bf31b63c163\\lib-utf8_zero",
+        "target\\debug\\.fingerprint\\utf8-zero-e039b2e77f490585\\dep-lib-utf8_zero",
+        "target\\debug\\.fingerprint\\utf8-zero-e039b2e77f490585\\lib-utf8_zero",
+        "target\\debug\\.fingerprint\\webpki-root-certs-82b7d74743bd4698\\dep-lib-webpki_root_certs",
+        "target\\debug\\.fingerprint\\webpki-root-certs-82b7d74743bd4698\\lib-webpki_root_certs",
+        "target\\debug\\.fingerprint\\windows-link-150b3b6c2f554e0b\\dep-lib-windows_link",
+        "target\\debug\\.fingerprint\\windows-link-150b3b6c2f554e0b\\lib-windows_link",
+        "target\\debug\\.fingerprint\\windows-link-725d1b22618c7a3f\\dep-lib-windows_link",
+        "target\\debug\\.fingerprint\\windows-link-725d1b22618c7a3f\\lib-windows_link",
+        "target\\debug\\.fingerprint\\windows-sys-178815375013b5e7\\dep-lib-windows_sys",
+        "target\\debug\\.fingerprint\\windows-sys-178815375013b5e7\\lib-windows_sys",
+        "target\\debug\\.fingerprint\\windows-sys-2d23b9751cd09c48\\dep-lib-windows_sys",
+        "target\\debug\\.fingerprint\\windows-sys-2d23b9751cd09c48\\lib-windows_sys",
+        "target\\debug\\.fingerprint\\zeroize-a66154bf8d700a27\\dep-lib-zeroize",
+        "target\\debug\\.fingerprint\\zeroize-a66154bf8d700a27\\lib-zeroize",
+        "target\\debug\\.fingerprint\\zeroize-eab03ac11aac58cd\\dep-lib-zeroize",
+        "target\\debug\\.fingerprint\\zeroize-eab03ac11aac58cd\\lib-zeroize",
+        "target\\debug\\build\\httparse-0ae247bab06d1159\\output",
+        "target\\debug\\build\\httparse-0ae247bab06d1159\\root-output",
+        "target\\debug\\build\\httparse-0ae247bab06d1159\\stderr",
+        "target\\debug\\build\\matrixmultiply-4a47364e9073c8d4\\output",
+        "target\\debug\\build\\matrixmultiply-4a47364e9073c8d4\\root-output",
+        "target\\debug\\build\\matrixmultiply-4a47364e9073c8d4\\stderr",
+        "target\\debug\\build\\native-tls-deb746e5a4873545\\output",
+        "target\\debug\\build\\native-tls-deb746e5a4873545\\root-output",
+        "target\\debug\\build\\native-tls-deb746e5a4873545\\stderr",
+        "target\\debug\\build\\num-traits-9a1f284b321da57a\\output",
+        "target\\debug\\build\\num-traits-9a1f284b321da57a\\root-output",
+        "target\\debug\\build\\num-traits-9a1f284b321da57a\\stderr"
+      ],
+      "compile_check": {
+        "tool": "cargo check",
+        "ok": false,
+        "detail": "未实现：需联网拉 crate 并链接 ORT"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "java_onnxruntime",
+      "platform": "通用 NPU EP",
+      "language": "java",
+      "runtime": "onnxruntime",
+      "format": [
+        "onnx"
+      ],
+      "entry": "java_onnxruntime/src/main/java/Main.java",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ai.onnxruntime:onnxruntime jar",
+        "NPU EP"
+      ],
+      "signals": {
+        "todo_lines": [
+          14,
+          15,
+          16,
+          20,
+          23,
+          39
+        ],
+        "live_inference_call_lines": [
+          22,
+          30,
+          36
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "javac",
+        "ok": false,
+        "detail": "未实现：需 classpath 含运行库 jar"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "java_djl",
+      "platform": "多平台 NPU backend",
+      "language": "java",
+      "runtime": "djl",
+      "format": [],
+      "entry": "java_djl/src/main/java/Main.java",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "ai.djl:* jar 与 NPU 引擎 native 库"
+      ],
+      "signals": {
+        "todo_lines": [
+          20,
+          21,
+          35
+        ],
+        "live_inference_call_lines": [
+          33,
+          34
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "javac",
+        "ok": false,
+        "detail": "未实现：需 classpath 含运行库 jar"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "csharp_onnxruntime",
+      "platform": "通用 NPU EP",
+      "language": "csharp",
+      "runtime": "onnxruntime",
+      "format": [
+        "onnx"
+      ],
+      "entry": "csharp_onnxruntime/Program.cs",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "dotnet SDK 8.0 + Microsoft.ML.OnnxRuntime + NPU EP"
+      ],
+      "signals": {
+        "todo_lines": [
+          16,
+          17,
+          18,
+          21,
+          25,
+          41
+        ],
+        "live_inference_call_lines": [
+          23
+        ],
+        "commented_out_inference_call_lines": [],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "dotnet build",
+        "ok": false,
+        "detail": "dotnet SDK 未安装"
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "node_onnxruntime",
+      "platform": "通用 NPU EP",
+      "language": "javascript",
+      "runtime": "onnxruntime",
+      "format": [
+        "onnx"
+      ],
+      "entry": "node_onnxruntime/index.js",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "onnxruntime-node",
+        "NPU EP"
+      ],
+      "signals": {
+        "todo_lines": [
+          9,
+          10,
+          11,
+          13,
+          15,
+          19,
+          33
+        ],
+        "live_inference_call_lines": [
+          17,
+          25,
+          29
+        ],
+        "commented_out_inference_call_lines": [
+          14
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [
+        "node_modules\\.bin\\semver",
+        "node_modules\\adm-zip\\LICENSE",
+        "node_modules\\define-data-property\\.eslintrc",
+        "node_modules\\define-data-property\\.nycrc",
+        "node_modules\\define-data-property\\LICENSE",
+        "node_modules\\define-properties\\.editorconfig",
+        "node_modules\\define-properties\\.eslintrc",
+        "node_modules\\define-properties\\.nycrc",
+        "node_modules\\define-properties\\LICENSE",
+        "node_modules\\es-define-property\\.eslintrc",
+        "node_modules\\es-define-property\\.nycrc",
+        "node_modules\\es-define-property\\LICENSE",
+        "node_modules\\es-errors\\.eslintrc",
+        "node_modules\\es-errors\\LICENSE",
+        "node_modules\\escape-string-regexp\\license",
+        "node_modules\\global-agent\\LICENSE",
+        "node_modules\\globalthis\\.eslintrc",
+        "node_modules\\globalthis\\.nycrc",
+        "node_modules\\globalthis\\LICENSE",
+        "node_modules\\gopd\\.eslintrc",
+        "node_modules\\gopd\\LICENSE",
+        "node_modules\\has-property-descriptors\\.eslintrc",
+        "node_modules\\has-property-descriptors\\.nycrc",
+        "node_modules\\has-property-descriptors\\LICENSE",
+        "node_modules\\matcher\\license",
+        "node_modules\\object-keys\\.editorconfig",
+        "node_modules\\object-keys\\.eslintrc",
+        "node_modules\\object-keys\\LICENSE",
+        "node_modules\\semver\\LICENSE",
+        "node_modules\\serialize-error\\license",
+        "node_modules\\type-fest\\license"
+      ],
+      "compile_check": {
+        "tool": "node --check",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    },
+    {
+      "id": "node_webnn",
+      "platform": "通用 WebNN",
+      "language": "javascript",
+      "runtime": "webnn",
+      "format": [
+        "onnx"
+      ],
+      "entry": "node_webnn/index.js",
+      "extracted_status": "placeholder",
+      "missing_deps": [
+        "支持 WebNN 的浏览器/运行时（NPU 后端）"
+      ],
+      "signals": {
+        "todo_lines": [
+          8,
+          10,
+          13,
+          17
+        ],
+        "live_inference_call_lines": [],
+        "commented_out_inference_call_lines": [
+          11,
+          15
+        ],
+        "shell_functions": []
+      },
+      "bundled_models": [],
+      "compile_check": {
+        "tool": "node --check",
+        "ok": true,
+        "detail": ""
+      },
+      "status": "placeholder"
+    }
+  ]
+}
