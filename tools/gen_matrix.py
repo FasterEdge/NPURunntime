@@ -5,16 +5,19 @@
 状态判定规则（全部来自对源码的机械提取，不含人工填写的状态字段）：
 
 - verified   该示例被 tools/verify_matrix.py 通过真实的「构建 + 运行」用例驱动过，
-             用例名在本脚本 RUNTIME_CASES 中显式声明；构建/运行证据由 verify_matrix.py
-             写入 matrix.json 的 evidence 字段。
+             用例名在 verify_matrix.py 的 CASES 中显式声明（本脚本不写 verified）；
+             构建/运行证据由 verify_matrix.py 写入 matrix.json 的 evidence 字段。
 - compilable 源码在语法/编译层面通过检查：Python 过 `py_compile` 或 `ast.parse`，
-             Go 过 `gofmt -l`，JavaScript 过 `node --check`，C/C++ 过 `g++ -fsyntax-only -fsyntax-only`
-             的翻译单元语法检查；但推理调用尚未真正执行（缺模型或运行库）。
+             Go 过 `gofmt -l`，JavaScript 过 `node --check`，C/C++ 过 `g++ -fsyntax-only`
+             的翻译单元语法检查，Java 过无 classpath 的裸 `javac`，Rust 过
+             `cargo check --offline`，C# 过 `dotnet build`；但推理调用尚未真正执行
+             （缺模型或运行库）。
 - placeholder 以下三条独立信号命中任意一条即为 placeholder（源码证据保留在 signals 字段）：
              1. 存在未消除的 `TODO`（grep 结果）；
              2. 推理调用不存在或整体被注释掉（`//` 或 `#` 行注释后跟推理 API）；
-             3. 推理函数是空壳：函数体里只有 return []/return None/return data/None，
-                没有真正调用运行库。
+             3. 推理函数是空壳：函数体只有 return [] / return None / return <常量>，
+                没有真正调用运行库。（`raise NotImplementedError` 不算空壳——它会
+                让程序以非零退出码失败，不会被误当成"跑完 0 个输出"的假成功。）
 
 用法：
     python tools/gen_matrix.py            # 重新提取并覆盖 matrix.json
@@ -31,6 +34,7 @@ import re
 import shutil
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -89,16 +93,44 @@ INFERENCE_CALL_PATTERNS = {
 }
 
 # 模型格式：按目录名/常量里的文件后缀真实提取
+# 注意：必须以集合形式参与 `p.suffix in ...` 判断；曾误写成
+# `[f"" for f in FORMAT_SUFFIXES]`（全是空串），导致任何后缀都匹配不上，
+# 模型文件探测永远返回空，因此这里单独存一份供成员判断的集合。
 FORMAT_SUFFIXES = [
     ".onnx", ".tflite", ".pb", ".pt", ".pth", ".h5", ".keras", ".pdmodel", ".pdiparams",
     ".xml", ".bin", ".engine", ".prototxt", ".caffemodel", ".gguf", ".msgpack",
     ".mlpackage", ".mlmodel", ".pte", ".nb", ".mnn", ".param", ".rknn", ".om", ".bmodel",
-    ".neuron", ".dlc", ".safetensors", ".msgpack",
+    ".neuron", ".dlc", ".safetensors", ".mm",
 ]
 
 
+# 扫描时一律跳过的产物/依赖目录：这些目录里的文件既不是示例源码，也不是随仓库的模型。
+# 曾漏掉 node_modules（node_onnxruntime 里 539 个文件）与 target（rust_ort 里 136 个文件），
+# 导致 bundled_models 把依赖包里的 LICENSE/.eslintrc 当成"模型文件"。
+SKIP_DIRS = {"node_modules", "__pycache__", "target", "build", "dist", "obj", "bin",
+             ".git", ".venv", "venv", "vendor", ".cargo", ".gradle"}
+
+# 这些文件名虽然带模型后缀（.xml），其实是构建/打包描述符，不能算模型。
+NON_MODEL_NAMES = {"pom.xml", "packages.config", "app.config", "web.config",
+                   "AndroidManifest.xml", "strings.xml"}
+
+
+def should_skip(path: Path) -> bool:
+    return any(part in SKIP_DIRS for part in path.parts)
+
+
 def read_text(path: Path) -> str:
-    return path.read_text(encoding="utf-8", errors="replace")
+    """按 UTF-8 读取，失败再按 GBK 试（Windows 上部分源码/报错是 GBK）。
+
+    绝不静默用 errors="replace"：替换会写出 U+FFFD，把编码问题伪装成正常文本。
+    """
+    raw = path.read_bytes()
+    for enc in ("utf-8-sig", "gbk"):
+        try:
+            return raw.decode(enc)
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", errors="replace")
 
 
 def find_entry(directory: Path, lang: str) -> Path | None:
@@ -106,10 +138,10 @@ def find_entry(directory: Path, lang: str) -> Path | None:
         candidate = directory / rel
         if candidate.is_file():
             return candidate
-    # 兜底：目录下任意该语言源文件（按文件名排序取第一个）
+    # 兜底：目录下任意该语言源文件（按文件名排序取第一个），跳过依赖/产物目录
     suffix = {v: k for k, v in LANG_BY_SUFFIX.items()}[lang]
-    candidates = sorted(p for p in directory.rglob("*" + suffix) if p.is_file()
-                        and "__pycache__" not in p.parts)
+    candidates = sorted(p for p in directory.rglob("*" + suffix)
+                        if p.is_file() and not should_skip(p.relative_to(directory)))
     return candidates[0] if candidates else None
 
 
@@ -217,8 +249,9 @@ def extract_python_placeholders(path: Path) -> dict:
 def extract_formats(directory: Path) -> list[str]:
     """从目录内源码里的字符串常量提取模型文件后缀（真实 grep，不照抄 README）。"""
     found: set[str] = set()
-    for src in sorted(p for p in directory.rglob("*") if p.is_file()
-                      and p.suffix in LANG_BY_SUFFIX and "__pycache__" not in p.parts):
+    for src in sorted(p for p in directory.rglob("*")
+                      if p.is_file() and p.suffix in LANG_BY_SUFFIX
+                      and not should_skip(p.relative_to(directory))):
         text = read_text(src)
         for suf in FORMAT_SUFFIXES:
             if re.search(re.escape(suf) + r'["\']', text):
@@ -227,27 +260,54 @@ def extract_formats(directory: Path) -> list[str]:
 
 
 def find_model_files(directory: Path) -> list[str]:
-    """目录内实际存在的模型文件（真实验证时判断是否随仓库提供）。"""
+    """目录内实际存在的模型文件（真实验证时判断是否随仓库提供）。
+
+    只认 FORMAT_SUFFIXES 里的后缀，且跳过依赖/构建产物目录与构建描述符（pom.xml）。
+    """
     present = []
     for p in sorted(directory.rglob("*")):
-        if p.is_file() and "__pycache__" not in p.parts and p.suffix in [f"" for f in FORMAT_SUFFIXES]:
-            present.append(str(p.relative_to(directory)))
+        if not p.is_file() or should_skip(p.relative_to(directory)):
+            continue
+        if p.name in NON_MODEL_NAMES or p.suffix not in FORMAT_SUFFIXES:
+            continue
+        present.append(str(p.relative_to(directory)))
     return present
 
 
+def decode_output(raw: bytes | str) -> str:
+    """把外部命令的输出解成 str：先 UTF-8，失败再按 GBK（Windows 本地化报错）。
+
+    绝不直接 errors="replace"：那样会把 GBK 中文整段变成 U+FFFD 并写进
+    matrix.json。最后再兜底剥掉仍可能残留的 U+FFFD，保证矩阵正文永不含替换字符。
+    """
+    if isinstance(raw, str):
+        return raw.replace("\ufffd", "")
+    if not raw:
+        return ""
+    for enc in ("utf-8", "gbk"):
+        try:
+            return raw.decode(enc).replace("\ufffd", "")
+        except UnicodeDecodeError:
+            continue
+    return raw.decode("utf-8", errors="replace").replace("\ufffd", "")
+
+
 def run_tool(argv: list[str], timeout: int = 60) -> dict:
-    """带超时的外部命令执行，超时如实记为失败而不是无限等待。"""
+    """带超时的外部命令执行，超时如实记为失败而不是无限等待。
+
+    输出按字节取回后自行解码（见 decode_output）：Windows 上 g++ / javac /
+    cargo / link.exe 的本地化报错是 GBK，强制按 UTF-8 解码会产出 U+FFFD，
+    从而污染 matrix.json。
+    """
     try:
-        # 显式 utf-8 + errors=replace：Windows 上 g++ 的本地化报错是 GBK，
-        # 用默认 locale 解码会抛 UnicodeDecodeError。
-        proc = subprocess.run(argv, capture_output=True, text=True,
-                              encoding="utf-8", errors="replace", timeout=timeout)
+        proc = subprocess.run(argv, capture_output=True, timeout=timeout)
     except subprocess.TimeoutExpired:
         return {"returncode": -1, "stdout": "", "stderr": f"超时（>{timeout}s）"}
     except OSError as exc:
         return {"returncode": -1, "stdout": "", "stderr": str(exc)}
-    return {"returncode": proc.returncode, "stdout": proc.stdout or "",
-            "stderr": proc.stderr or ""}
+    return {"returncode": proc.returncode,
+            "stdout": decode_output(proc.stdout),
+            "stderr": decode_output(proc.stderr)}
 
 
 def compile_check(path: Path, lang: str) -> dict:
@@ -283,17 +343,32 @@ def compile_check(path: Path, lang: str) -> dict:
         dotnet = shutil.which("dotnet")
         if not dotnet:
             return {"tool": "dotnet build", "ok": False, "detail": "dotnet SDK 未安装"}
-        return {"tool": "dotnet build", "ok": False, "detail": "未实现：需在示例目录内构建"}
+        res = run_tool([dotnet, "build", "-v", "q", "--nologo", str(path.parent)],
+                       timeout=300)
+        err = (res["stderr"] or res["stdout"]).strip()
+        return {"tool": "dotnet build", "ok": res["returncode"] == 0,
+                "detail": (err.splitlines()[-1][:400] if err else "")}
     if lang == "java":
         javac = shutil.which("javac")
         if not javac:
             return {"tool": "javac", "ok": False, "detail": "javac 未安装"}
-        return {"tool": "javac", "ok": False, "detail": "未实现：需 classpath 含运行库 jar"}
+        # 无 classpath 的裸 javac：缺运行库 jar 的 import 会失败，
+        # 这正是"缺失依赖"的证据，如实记录首条错误。产物写到系统临时目录，
+        # 不在示例目录里留 .class 或 target/。
+        with tempfile.TemporaryDirectory(prefix="fe-javac-probe-") as td:
+            res = run_tool([javac, "-proc:none", "-d", td, str(path)], timeout=120)
+        err = (res["stderr"] or res["stdout"]).strip()
+        return {"tool": "javac（无 classpath）", "ok": res["returncode"] == 0,
+                "detail": (err.splitlines()[0][:400] if err else "")}
     if lang == "rust":
         cargo = shutil.which("cargo")
         if not cargo:
             return {"tool": "cargo check", "ok": False, "detail": "cargo 未安装"}
-        return {"tool": "cargo check", "ok": False, "detail": "未实现：需联网拉 crate 并链接 ORT"}
+        res = run_tool([cargo, "check", "--offline", "--manifest-path",
+                        str(path.parent.parent / "Cargo.toml")], timeout=600)
+        err = (res["stderr"] or res["stdout"]).strip()
+        return {"tool": "cargo check --offline", "ok": res["returncode"] == 0,
+                "detail": (err.splitlines()[-1][:400] if err else "")}
     return {"tool": None, "ok": False, "detail": f"未知语言 {lang}"}
 
 
@@ -397,19 +472,23 @@ def main() -> int:
             return 1
 
         def normalize(doc: dict) -> str:
-            """--check 只比对与工具链无关的源码事实：signals / format / entry / missing_deps。
+            """--check 只比对与工具链、与本机解释器无关的源码事实。
 
-            有意排除 status、extracted_status、compile_check、evidence：
-            - status / evidence 由 verify_matrix.py 真实跑通后写入；
-            - compile_check 依赖本机是否装了 g++ / node / gofmt / dotnet / cargo，
-              跨机器比对必然产生假失败（CI 与本地工具链不同）。
-            这也意味着 --check 无法发现"本机状态字段过期"，需要重新跑一次
-            gen_matrix.py + verify_matrix.py 才能确认，README 已注明。"""
+            有意排除：
+            - status / extracted_status / compile_check / evidence：前两者由
+              verify_matrix.py 真实跑通后写入，compile_check 依赖本机是否装了
+              g++ / node / gofmt / dotnet / cargo，跨机器比对必然假失败。
+            - environment：里面有本机 Python 版本，换个解释器就会假失败。
+            - summary：计数派生自上面这些被排除的字段。
+
+            只保留 samples 的源码事实：signals / format / entry / missing_deps /
+            id / platform / language / runtime / bundled_models。"""
             doc = json.loads(json.dumps(doc))
             for sample in doc.get("samples", []):
                 for key in ("status", "extracted_status", "compile_check", "evidence"):
                     sample.pop(key, None)
-            doc.pop("summary", None)
+            for key in ("environment", "summary", "note"):
+                doc.pop(key, None)
             return json.dumps(doc, ensure_ascii=False, indent=2, sort_keys=True)
 
         current = json.loads(read_text(MATRIX_PATH))

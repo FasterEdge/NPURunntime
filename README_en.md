@@ -74,6 +74,68 @@
 | [node_onnxruntime](node_onnxruntime/) | Generic (NPU EP) | onnxruntime-node | ONNX Runtime in Node.js with the NPU execution provider |
 | [node_webnn](node_webnn/) | Generic (WebNN) | WebNN API | WebNN NPU backend inference |
 
+## Verifiability Matrix (machine-readable)
+
+The repository root `matrix.json` records the real verifiability state of every example, extracted from the
+source code by a script — it is **not hand-written**:
+
+```
+python tools/gen_matrix.py            # re-extract and overwrite matrix.json
+python tools/gen_matrix.py --check    # fail with exit code 1 if matrix.json disagrees with the source
+python tools/verify_matrix.py         # really build + run the declared cases and write evidence back
+python tools/verify_matrix.py --check # read-only check that the existing evidence still holds (no rerun, no write)
+```
+
+`--check` compares only the source facts that are independent of the toolchain and of the local Python
+interpreter (unresolved TODOs, whether an inference call exists, model formats, entry file, missing-dependency
+list, bundled model files). It deliberately skips `status`, `compile_check`, and `evidence` — those depend on
+whether g++ / node / gofmt / dotnet / cargo and the ONNX Runtime shared library are installed locally, so
+cross-machine comparison produces false failures — and it skips `environment` / `summary` (local Python
+version and status counts).
+
+`evidence.command` has local absolute paths replaced with placeholders (`<repo>/`, `<tmp>`,
+`<home>`) when the evidence is written back, keeping only the information that matters (“which
+temp directory”). The matrix is committed, so baking in `C:\Users\<user>\...` would make it
+impossible for anyone else to reproduce the command and would leak local details into the
+repository. `evidence.output_tail` is the tail of the output from that very run; non-ASCII text is
+decoded strictly as UTF-8 first and falls back to the local code page, so no U+FFFD ever lands in
+the matrix.
+
+Status definitions (exactly one of three; the decision rules are documented in the `tools/gen_matrix.py`
+top docstring):
+
+| Status | Meaning |
+|--------|---------|
+| `verified` | Real build + run driven by `tools/verify_matrix.py`; command and output recorded in the `evidence` field of `matrix.json` |
+| `compilable` | Syntax/compile check passed (Python `py_compile`-equivalent syntax check, Go `gofmt -l`, JS `node --check`, C++ `g++ -fsyntax-only`, Java bare `javac` without classpath, Rust `cargo check --offline`, C# `dotnet build`), but the inference call has not executed (missing model or runtime) |
+| `placeholder` | An unresolved `TODO` remains, the inference call is missing or commented out, or the syntax/compile check failed |
+
+> **On "not pretending to run a real NPU"**: `status` only becomes `verified` after `tools/verify_matrix.py`
+> has actually driven the example, and that script declares exactly one case (`go_onnxruntime`). So there are
+> only two reproducible states in this repository:
+>
+> - After `python tools/gen_matrix.py` alone: `summary.verified == 0` and **all 29/29 examples are
+>   `placeholder`** (`gen_matrix.py` never writes `verified` by itself).
+> - After `python tools/verify_matrix.py`: `go_onnxruntime` is promoted to `verified` and the command plus
+>   output are recorded in its `evidence` field. That case runs the **ONNX Runtime CPU execution provider
+>   (not an NPU)**, borrowing `yolov5n.onnx` from the sibling repository ModelRunntime; this repository ships
+>   no model files. The other 28 examples stay `placeholder`.
+>
+> **No NPU inference path has ever executed on this machine**: it has no Ascend / Rockchip / Qualcomm /
+> Horizon / Cambricon NPU and no vendor SDKs such as CANN / RKNPU2 / SNPE / QNN / NeuroPilot / Core ML.
+> `bundled_models` is an empty array for all 29 examples, i.e. the repository contains no loadable model file.
+> The specific missing dependencies for each example are listed in the `missing_deps` field of `matrix.json`.
+> This is not "unfinished" but an honest statement of the hardware boundary: **no hardware, no SDK, no claim
+> of working**.
+>
+> On shell functions: the `run_inference` of `python_ascend` / `python_cambricon` / `python_executorch` /
+> `python_horizon` / `python_mediatek` now always raises `NotImplementedError` and no longer returns
+> `[]` / `None` — that would let `__main__` print "done 0 outputs" and exit with code 0, a fake success path.
+> Accordingly `signals.shell_functions` is an empty array for all 29 examples (0 entries in total) and is no
+> longer a decision signal. These examples remain `placeholder` because `signals.todo_lines` is non-empty
+> (the inference body still carries TODOs) or `signals.live_inference_call_lines` is empty (no real inference
+> call at all).
+
 ## Usage
 
 1. Enter the target subdirectory and inspect the language/platform `main` file and dependency manifest.
