@@ -2,4 +2,4 @@
 # 当前 Python 3.12+ 环境需从 Paddle Lite 官方发布页获取对应 NPU 的构建包。
 paddlelite==2.12; python_version < "3.8"
 numpy>=2.5.5
-opencv-python>=5.0.0.93
+opencv-python>=5.1.0.95
